@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Добро пожаловать!</title>
+        <meta name="description" content="Домашняя страница">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">
+                Вы используете <strong>устарелый</strong> браузер.
+                Пожалуйста, <a href="#">обновите ваш браузер</a> для улучшения опыта.
+            </p>
+        <![endif]-->
+        
+        Перейдите по <a href="./api/users">этой ссылке</a>, чтобы получить всех пользователей
+
+        <form method="get" id="get-by-id-form">
+            <p>Заполните форму для поиска пользователя по id:</p>
+            <input type="number" min="1" value="1" id="id-field"/>
+            <button>Найти</button>
+        </form>
+        
+        <form method="post" action="./api/users">
+            <p>Заполните форму и добавьте пользователя:</p>
+            <input name="name" placeholder="Имя пользователя"/>
+            <input name="password" type="password" placeholder="Пароль" autocomplete="current-password"/>
+            <select name="gender" placeholder="Пол" title="Ваш пол">
+                <option disabled>Выберите пол</option>
+                <option value="male" selected>Мужчина</option>
+                <option value="female">Женщина</option>
+            </select>
+            <button>Добавить</button>
+        </form>
+
+        <script defer>
+            const idField = document.getElementById('id-field');
+            const getByIdForm = document.getElementById('get-by-id-form');
+
+            getByIdForm.addEventListener('submit', e => {
+                e.preventDefault();
+                location.href = `./api/users?id=${idField.value}`;
+            });
+        </script>
+    </body>
+</html>
