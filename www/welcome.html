@@ -10,6 +10,7 @@
         <title>Добро пожаловать!</title>
         <meta name="description" content="Домашняя страница">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="./css/style.css">
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -19,24 +20,24 @@
             </p>
         <![endif]-->
         
-        Перейдите по <a href="./api/users">этой ссылке</a>, чтобы получить всех пользователей
+        <p>Перейдите по <a href="./api/users">этой ссылке</a>, чтобы получить всех пользователей</p>
 
         <form method="get" id="get-by-id-form">
             <p>Заполните форму для поиска пользователя по id:</p>
-            <input type="number" min="1" value="1" id="id-field"/>
-            <button>Найти</button>
+            <input required type="number" min="1" value="1" id="id-field" placeholder="Код пользователя"/>
+            <button type="submit">Найти</button>
         </form>
         
         <form method="post" action="./api/users">
             <p>Заполните форму и добавьте пользователя:</p>
-            <input name="name" placeholder="Имя пользователя"/>
-            <input name="password" type="password" placeholder="Пароль" autocomplete="current-password"/>
-            <select name="gender" placeholder="Пол" title="Ваш пол">
+            <input required name="name" placeholder="Имя пользователя"/>
+            <input required name="password" type="password" placeholder="Пароль" autocomplete="current-password"/>
+            <select required name="gender" placeholder="Пол" title="Ваш пол">
                 <option disabled>Выберите пол</option>
                 <option value="male" selected>Мужчина</option>
                 <option value="female">Женщина</option>
             </select>
-            <button>Добавить</button>
+            <button type="submit">Добавить</button>
         </form>
 
         <script defer>
