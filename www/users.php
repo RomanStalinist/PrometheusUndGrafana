@@ -16,8 +16,7 @@ function getDbConnection() {
         return $pdo;
     } catch (PDOException $e) {
         http_response_code(500);
-        $message = $e->getMessage();
-        error_log($message, 3, '/var/log/app_errors.log');
+        error_log($e->getMessage(), 3, '/var/log/app_errors.log');
         echo json_encode(['error' => 'Database connection failed'], JSON_UNESCAPED_UNICODE);
         exit();
     }
@@ -33,7 +32,13 @@ switch ($_SERVER['REQUEST_METHOD']) {
             exit();
         }
 
-        $id = (int)$_GET['id'];
+        $id = filter_var($_GET['id'], FILTER_VALIDATE_INT);
+        if (!$id) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Invalid ID'], JSON_UNESCAPED_UNICODE);
+            exit();
+        }
+
         $stmt = $pdo->prepare("SELECT * FROM users WHERE id = :id");
         $stmt->execute([':id' => $id]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -120,7 +125,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         } catch (Exception $e) {
             $pdo->rollback();
             http_response_code(500);
-            echo json_encode(['error' => 'Transaction failed'], JSON_UNESCAPED_UNICODE);
+            echo json_encode(['error' => 'Database transaction failed'], JSON_UNESCAPED_UNICODE);
             exit();
         }
         
