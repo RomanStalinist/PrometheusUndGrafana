@@ -1,8 +1,9 @@
 html, body {
     margin: 0;
-    padding: 0;
+    padding: 8px;
     display: flex;
     font-size: 14pt;
+    text-align: center;
     align-items: center;
     flex-direction: column;
     justify-content: center; /* Центрирование */
