@@ -17,6 +17,18 @@ services:
     depends_on:
       - db
 
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+
   db:
     image: mysql:5.7
     environment:
@@ -32,7 +44,7 @@ services:
     environment:
       PMA_HOST: db
       PMA_USER: root
-      PMA_PASSWORD: root
+      PMA_PASSWORD: ""
     ports:
       - "8081:80"
 
