@@ -5,10 +5,10 @@ header('X-Content-Type-Options: nosniff');
 header('X-Frame-Options: DENY');
 
 function getDbConnection() {
-    $host = 'db'; // Имя сервиса, определенное в docker-compose
+    $host = 'db';
     $db = 'users_db';
-    $user = 'user';
-    $pass = 'password';
+    $user = 'root';
+    $pass = 'root';
 
     try {
         $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
@@ -16,7 +16,6 @@ function getDbConnection() {
         return $pdo;
     } catch (PDOException $e) {
         http_response_code(500);
-        error_log($e->getMessage(), 3, '/var/log/app_errors.log');
         echo json_encode(['error' => 'Database connection failed'], JSON_UNESCAPED_UNICODE);
         exit();
     }
@@ -121,6 +120,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 http_response_code(500);
                 echo json_encode(['error' => 'Failed to create user'], JSON_UNESCAPED_UNICODE);
             }
+
             $pdo->commit();
         } catch (Exception $e) {
             $pdo->rollback();
